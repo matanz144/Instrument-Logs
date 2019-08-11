@@ -1,0 +1,192 @@
+<div>
+  <div class="container-fluid my-container">
+
+    <div class="row first-row">
+      <div class="col-md-12 Title">
+        <h2>New Issue</h2>
+      </div>
+    </div>
+    <div class="row second-row">
+      <div class="col-md nameField">
+        <label for="nameField">Issue Name:</label>
+        <input type="text" class="text" id="nameField" [(ngModel)]="Issue_name">
+      </div>
+    </div>
+    <div class="row text">
+      <div class="col-md-12 Instrument">
+        <h5>Instrument</h5>
+      </div>
+    </div>
+<!--    <div class="row justify-content-start fifth-row">-->
+<!--      <div class="col-sm-1 MS">-->
+
+<!--        <div class="custom-control custom-radio">-->
+<!--          <input type="radio" class="custom-control-input" id="MS" name="groupOfDefaultRadios" value="MS"-->
+<!--                 [(ngModel)]="Instrument" (change)="InstrumentSelect()">-->
+<!--          <label class="custom-control-label" for="MS">MS</label>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-sm-1 LC">-->
+<!--        <div class="custom-control custom-radio">-->
+<!--          <input type="radio" class="custom-control-input" id="LC" name="groupOfDefaultRadios" value="LC"-->
+<!--                 [(ngModel)]="Instrument" (change)="InstrumentSelect()">-->
+<!--          <label class="custom-control-label" for="LC">LC</label>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <div class="row justify-content-start Instrument_Select">
+      <div class="col-md-4">
+        <label for="MS_Select">Select MS:</label>
+        <select class="form-control" id="MS_Select" name="MS_Select" (change)="InstrumentSelect()"
+                [(ngModel)]="this.MS_Instrument">
+          <!--        <select class="form-control" id="MS_Select" name="MS_Select" (change)="InstrumentSelect()"-->
+<!--                [(ngModel)]="MS_Instrument" *ngIf="Instrument === 'MS'">-->
+          <option value='Fusion1'>Fusion1</option>
+          <option value='HF1'>HF1</option>
+          <option value='HF2'>HF2</option>
+          <option value='HFX'>HFX</option>
+          <option value='QEP2'>QEP2</option>
+          <option value='None'>None</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label for="LC_Select">Select LC:</label>
+        <select class="form-control" id="LC_Select" name="LC_Select" (change)="InstrumentSelect()"
+              [(ngModel)]="this.LC_Instrument">
+<!--        <select class="form-control" id="LC_Select" name="LC_Select" (change)="InstrumentSelect()"-->
+<!--                [(ngModel)]="LC_Instrument" *ngIf="Instrument === 'LC'">-->
+          <option value='CE'>CE</option>
+          <option value='LC1'>LC1</option>
+          <option value='LC2'>LC2</option>
+          <option value='LC3'>LC3</option>
+          <option value='LC4'>LC4</option>
+          <option value='LC5'>LC5</option>
+          <option value='LC6'>LC6</option>
+          <option value='None'>None</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row justify-content-start third-row">
+      <div class="col-md-4 IssueType">
+        <div class="dropdown">
+          <label for="issue_type">Select Issue Type:</label>
+          <select class="form-control" id="issue_type" (change)="Issue_Type_Select()" [(ngModel)]="select1">
+            <option value='Fault'>FAULT</option>
+            <option value='QC'>QC</option>
+            <option value="Maintenance - Replace">REPLACE</option>
+            <option value="Maintenance - Clean">CLEAN</option>
+            <option value="Maintenance - Calibrate">CALIBRATE</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-start six-row">
+      <div class="col-md-12 CheckBox">
+        <div *ngIf="isSelected('Fault')">
+          <li><input type="checkbox" id="RT_Shift" [(ngModel)]="FaultParams.RT_Shift">RT Shift</li>
+          <li><input type="checkbox" id="Loss_of_Pressure" [(ngModel)]="FaultParams.Loss_of_Pressure">Loss of Pressure
+          </li>
+          <li><input type="checkbox" id="Carry_Over" [(ngModel)]="FaultParams.Carry_Over">Carry Over</li>
+          <li><input type="checkbox" id="Sensitivity" [(ngModel)]="FaultParams.Sensitivity">Sensitivity</li>
+          <li><input type="checkbox" id="MS_Fragmentation" [(ngModel)]="FaultParams.MS_Fragmentation">MS Fragmentation
+          </li>
+          <li><label for="fault_other_text">Other:</label>
+            <input type="text" class="form-check-label" id="fault_other_text" [(ngModel)]="FaultParams.Fault_other">
+          </li>
+        </div>
+        <div *ngIf="isSelected('QC')">
+          <li>
+            <label for="MS2">MS2: </label>
+            <input type="number" id="MS2" [(ngModel)]="QCParams.MS2">
+          </li>
+          <li>
+            <label for="PSM">PSM:</label>
+            <input type="number" id="PSM" [(ngModel)]="QCParams.PSM">
+          </li>
+          <li>
+            <label for="Peptides">Peptides:</label>
+            <input type="number" id="Peptides" [(ngModel)]="QCParams.Peptides">
+          </li>
+          <li>
+            <label for="Proteins">Proteins: </label>
+            <input type="number" id="Proteins" [(ngModel)]="QCParams.Proteins">
+          </li>
+          <li>
+            <label for="PPM">PPM: </label>
+            <input type="number" id="PPM" [(ngModel)]="this.PPMNum">
+            <input type="text" id="PPMtext"[(ngModel)]="this.PPMText">
+          </li>
+        </div>
+        <div *ngIf="isSelected('Maintenance - Replace')">
+          <li><input type="radio" name="optradio" value="Emitter" [(ngModel)]="choice">Emitter</li>
+          <li>
+            <input type="radio" name="optradio" value="Trap_column" [(ngModel)]="choice">
+            <label for="Trap_column_text">Trap column:</label>
+            <input type="text" id="Trap_column_text" [(ngModel)]="ReplaceParams.Trap_column"
+                   [disabled]="choice !== 'Trap_column'">
+          </li>
+          <li>
+            <input type="radio" name="optradio" value="Analytical_column" [(ngModel)]="choice">
+            <label for="Analytical_column_text">Analytical column:</label>
+            <input type="text" id="Analytical_column_text" [(ngModel)]="ReplaceParams.Analytical_column"
+                   [disabled]="choice !== 'Analytical_column'">
+          </li>
+          <li><input type="radio" name="optradio" value="Solvent" [(ngModel)]="choice">Solvent</li>
+          <li><input type="radio" name="optradio" value="Heated_Capillary" [(ngModel)]="choice">Heated Capillary</li>
+          <li><input type="radio" name="optradio" value="Ion_Source" [(ngModel)]="choice">Ion Source</li>
+          <li>
+            <input type="radio" name="optradio" value="LC_Replace" [(ngModel)]="choice">
+            <label for="LC_Replace_number">LC:</label>
+            <input type="number" id="LC_Replace_number" [(ngModel)]="ReplaceParams.LC_Replace"
+                   [disabled]="choice !== 'LC_Replace'">
+          </li>
+          <li>
+              <input type="radio" name="optradio" value="Other" [(ngModel)]="choice">
+              <label for="Other">Other:</label>
+              <input type="text" id="Other" [(ngModel)]="ReplaceParams.Other"
+                   [disabled]="choice !== 'Other'">
+          </li>
+        </div>
+        <div *ngIf="isSelected('Maintenance - Clean')">
+          <li><input type="checkbox" id="Multiple_choices" [(ngModel)]="CleanParams.Multiple_choices">Multiple choices
+          </li>
+          <li><input type="checkbox" id="S_Lens" [(ngModel)]="CleanParams.S_Lens">S-Lens</li>
+          <li><input type="checkbox" id="Inj_Flatapole" [(ngModel)]="CleanParams.Inj_Flatapole">Inj. Flatapole</li>
+          <li><input type="checkbox" id="HCD" [(ngModel)]="CleanParams.HCD">HCD</li>
+          <li><input type="checkbox" id="Exit_Lens" [(ngModel)]="CleanParams.Exit_Lens">Exit Lens</li>
+          <li><input type="checkbox" id="Full" [(ngModel)]="CleanParams.Full">Full</li>
+          <li><label for="Clean_other">Other:</label>
+            <input type="text" class="form-check-label" id="Clean_other" [(ngModel)]="CleanParams.Clean_other"></li>
+        </div>
+        <div *ngIf="isSelected('Maintenance - Calibrate')">
+          <li><input type="checkbox" id="Calibrate_Full" [(ngModel)]="CalibrateParams.Calibrate_Full">Full</li>
+          <li><input type="checkbox" id="IT" [(ngModel)]="CalibrateParams.IT">IT</li>
+          <li><input type="checkbox" id="OT" [(ngModel)]="CalibrateParams.OT">OT</li>
+          <li><input type="checkbox" id="ETD" [(ngModel)]="CalibrateParams.ETD">ETD</li>
+          <li><input type="checkbox" id="High Mass" [(ngModel)]="CalibrateParams.High_Mass">High Mass</li>
+          <li><input type="checkbox" id="Mass Only" [(ngModel)]="CalibrateParams.Mass_Only">Mass Only</li>
+          <li><input type="checkbox" id="Check Only" [(ngModel)]="CalibrateParams.Check_Only">Check Only</li>
+          <li><label for="calibrate_Fail_text">Fail:</label>
+            <input type="text" class="form-check-label" id="Calibrate_Fail_text"
+                   [(ngModel)]="CalibrateParams.Calibrate_Fail_text"></li>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-start forth-row">
+      <div class="col-md-4 submit">
+        <button class="btn btn-primary" (click)="onSubmit()" id="submit"
+                [disabled]="(MS_Instrument == '' && LC_Instrument === '') || issueType === '' || Issue_name === ''">Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+

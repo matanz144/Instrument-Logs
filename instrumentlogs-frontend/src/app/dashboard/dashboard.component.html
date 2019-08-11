@@ -1,0 +1,16 @@
+<div class="title">
+  <h2>Dashboard</h2>
+</div>
+
+
+<div class="graph" *ngIf="this.show == true; else elseBlock">
+
+    <div *ngFor="let graph of Instruemts_graphs">
+      <plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
+    </div>
+</div>
+<ng-template #elseBlock>
+  <p align="center">Loading, Please Wait...</p>
+</ng-template>
+
+
